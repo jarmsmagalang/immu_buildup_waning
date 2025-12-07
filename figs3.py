@@ -4,7 +4,7 @@ import scipy.integrate as integrate
 import pandas as pd
 from SALib.sample import saltelli
 from SALib.analyze import sobol
-from immuwane.model import params_vaccination, z_init_vaccination, Athresh_event, model_vaccination
+from src.model import params_vaccination, z_init_vaccination, Athresh_event, model_vaccination
 import matplotlib
 matplotlib.rcParams.update({'figure.autolayout': True})
 matplotlib.rcParams.update({'font.size':15})

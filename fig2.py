@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as integrate
-from immuwane.model import params_vaccination, z_init_vaccination, model_vaccination
+from src.model import params_vaccination, z_init_vaccination, model_vaccination
 import matplotlib
 matplotlib.rcParams.update({'figure.autolayout': True})
 matplotlib.rcParams.update({'font.size':15})
@@ -144,13 +144,13 @@ def model_vaccination_noA(t, z, params):
 
     """
     
-    L, S, I, Pf, Pfdc, Pssm, BG, B0L, B0H, B1L, B1H, B2, A1, A2, Abcr = z
+    L, S, I, Pf, Pfdc, Pssm, BG, BML, BMH, B1L, B1H, B2, A1, A2, Abcr = z
     
     A = (params["Abcrmin"]*A1) + (params["Abcrmax"]*A2)
     
     gGC=(1 - np.exp(-params["C"] *Pfdc*Abcr/(A+BG+1))) 
-    gB0L=(1 - np.exp(-params["C"] *Pssm/(A+B0L+1)))
-    gB0H=(1 - np.exp(-params["C"] *Pssm/( (A1/params["Abcrmax"]) + A2 +B0H+1)))
+    gBML=(1 - np.exp(-params["C"] *Pssm/(A+BML+1)))
+    gBMH=(1 - np.exp(-params["C"] *Pssm/( (A1/params["Abcrmax"]) + A2 +BMH+1)))
     
     f = (params["Abcrmax"]-Abcr)/(params["Abcrmax"]-params["Abcrmin"])
     
@@ -161,16 +161,16 @@ def model_vaccination_noA(t, z, params):
     dPfdcdt = ((params["kP"]/2)*S*Pf) - (Pfdc/params["taufdc"])
     dPssmdt = ((params["kP"]/2)*S*Pf) - (Pssm/params["taussm"])
     dBGdt = (params["cN"]*gGC*params["BN"]) - (params["epsilon"]*BG) - (params["apL"]*(1-gGC)*BG)
-    dB0Ldt = (params["NGC"]*f*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gB0L*B0L) - (B0L/params["tauB0"])
-    dB0Hdt = (params["NGC"]*params["v"]*(1-f)*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gB0H*B0H) - (B0H/params["tauB0"])
-    dB1Ldt = (params["h"]*params["c1"]*gB0L*B0L) - (B1L/params["tauB1"])
-    dB1Hdt = (params["h"]*params["c1"]*gB0H*B0H) - (B1H/params["tauB1"])
+    dBMLdt = (params["NGC"]*f*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gBML*BML) - (BML/params["tauBM"])
+    dBMHdt = (params["NGC"]*params["v"]*(1-f)*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gBMH*BMH) - (BMH/params["tauBM"])
+    dB1Ldt = (params["h"]*params["c1"]*gBML*BML) - (B1L/params["tauB1"])
+    dB1Hdt = (params["h"]*params["c1"]*gBMH*BMH) - (B1H/params["tauB1"])
     dB2dt = (params["NGC"]*(1-params["v"])*(1-f)*params["epsilon"]*BG) - (B2/params["tauB2"])
     dA1dt = 0
     dA2dt = 0
     dAbcrdt = params["epsilon"]*(params["Abcrmin"] - Abcr + ((params["Abcrmax"]-params["Abcrmin"])*gGC) )
     
-    z = dLdt, dSdt, dIdt, dPfdt, dPfdcdt, dPssmdt, dBGdt, dB0Ldt, dB0Hdt, dB1Ldt, dB1Hdt, dB2dt, dA1dt, dA2dt, dAbcrdt
+    z = dLdt, dSdt, dIdt, dPfdt, dPfdcdt, dPssmdt, dBGdt, dBMLdt, dBMHdt, dB1Ldt, dB1Hdt, dB2dt, dA1dt, dA2dt, dAbcrdt
     
     return z
 
@@ -210,7 +210,7 @@ def model_vaccination_S0noA(t, z, params):
 
     """
     
-    L, S, I, Pf, Pfdc, Pssm, BG, B0L, B0H, B1L, B1H, B2, A1, A2, Abcr = z
+    L, S, I, Pf, Pfdc, Pssm, BG, BML, BMH, B1L, B1H, B2, A1, A2, Abcr = z
     
     A = (params["Abcrmin"]*A1) + (params["Abcrmax"]*A2)
     
@@ -218,8 +218,8 @@ def model_vaccination_S0noA(t, z, params):
     betaPfA2 = params["betaPfA"]*params["Abcrmax"]
     
     gGC=(1 - np.exp(-params["C"] *Pfdc*Abcr/(A+BG+1))) 
-    gB0L=(1 - np.exp(-params["C"] *Pssm/(A+B0L+1)))
-    gB0H=(1 - np.exp(-params["C"] *Pssm/( (A1/params["Abcrmax"]) + A2 +B0H+1)))
+    gBML=(1 - np.exp(-params["C"] *Pssm/(A+BML+1)))
+    gBMH=(1 - np.exp(-params["C"] *Pssm/( (A1/params["Abcrmax"]) + A2 +BMH+1)))
     
     f = (params["Abcrmax"]-Abcr)/(params["Abcrmax"]-params["Abcrmin"])
     
@@ -230,21 +230,21 @@ def model_vaccination_S0noA(t, z, params):
     dPfdcdt = ((params["kP"]/2)*params["S0"]*Pf) - (Pfdc/params["taufdc"])
     dPssmdt = ((params["kP"]/2)*params["S0"]*Pf) - (Pssm/params["taussm"])
     dBGdt = (params["cN"]*gGC*params["BN"]) - (params["epsilon"]*BG) - (params["apL"]*(1-gGC)*BG)
-    dB0Ldt = (params["NGC"]*f*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gB0L*B0L) - (B0L/params["tauB0"])
-    dB0Hdt = (params["NGC"]*params["v"]*(1-f)*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gB0H*B0H) - (B0H/params["tauB0"])
-    dB1Ldt = (params["h"]*params["c1"]*gB0L*B0L) - (B1L/params["tauB1"])
-    dB1Hdt = (params["h"]*params["c1"]*gB0H*B0H) - (B1H/params["tauB1"])
+    dBMLdt = (params["NGC"]*f*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gBML*BML) - (BML/params["tauBM"])
+    dBMHdt = (params["NGC"]*params["v"]*(1-f)*params["epsilon"]*BG) + ((1-params["h"])*params["c1"]*gBMH*BMH) - (BMH/params["tauBM"])
+    dB1Ldt = (params["h"]*params["c1"]*gBML*BML) - (B1L/params["tauB1"])
+    dB1Hdt = (params["h"]*params["c1"]*gBMH*BMH) - (B1H/params["tauB1"])
     dB2dt = (params["NGC"]*(1-params["v"])*(1-f)*params["epsilon"]*BG) - (B2/params["tauB2"])
     dA1dt = 0
     dA2dt = 0
     dAbcrdt = params["epsilon"]*(params["Abcrmin"] - Abcr + ((params["Abcrmax"]-params["Abcrmin"])*gGC) )
     
-    z = dLdt, dSdt, dIdt, dPfdt, dPfdcdt, dPssmdt, dBGdt, dB0Ldt, dB0Hdt, dB1Ldt, dB1Hdt, dB2dt, dA1dt, dA2dt, dAbcrdt
+    z = dLdt, dSdt, dIdt, dPfdt, dPfdcdt, dPssmdt, dBGdt, dBMLdt, dBMHdt, dB1Ldt, dB1Hdt, dB2dt, dA1dt, dA2dt, dAbcrdt
     
     return z
 
 tvals = np.linspace(0,20, 101)
-L_anavals = [L_ana(t) for t in tvals]
+L_anavals = [L_ana(t)/L0 for t in tvals]
 I_anavals = [I_ana(t) for t in tvals]
 Pf_anavals = [Pf_ana(t) for t in tvals]
 Pfdc_anavals = [Pfdc_ana(params["taufdc"], t) for t in tvals]
@@ -252,7 +252,7 @@ Pssm_anavals = [Pfdc_ana(params["taussm"], t) for t in tvals]
 
 sol = integrate.solve_ivp(model_vaccination, [0,20], z0, args = ([params]), method = "BDF", dense_output = True)
 t_simvals = sol.t
-L_simvals = sol.y[0]
+L_simvals = sol.y[0]/L0
 I_simvals = sol.y[2]
 Pf_simvals = sol.y[3]
 Pfdc_simvals = sol.y[4]
@@ -260,7 +260,7 @@ Pssm_simvals = sol.y[5]
 
 solnoA = integrate.solve_ivp(model_vaccination_noA, [0,20], z0, args = ([params]), method = "BDF", dense_output = True)
 t_noAsimvals = solnoA.t
-L_noAsimvals = solnoA.y[0]
+L_noAsimvals = solnoA.y[0]/L0
 I_noAsimvals = solnoA.y[2]
 Pf_noAsimvals = solnoA.y[3]
 Pfdc_noAsimvals = solnoA.y[4]
@@ -268,7 +268,7 @@ Pssm_noAsimvals = solnoA.y[5]
 
 solS0noA = integrate.solve_ivp(model_vaccination_S0noA, [0,20], z0, args = ([params]), method = "BDF", dense_output = True)
 t_S0noAsimvals = solS0noA.t
-L_S0noAsimvals = solS0noA.y[0]
+L_S0noAsimvals = solS0noA.y[0]/L0
 I_S0noAsimvals = solS0noA.y[2]
 Pf_S0noAsimvals = solS0noA.y[3]
 Pfdc_S0noAsimvals = solS0noA.y[4]
@@ -286,9 +286,9 @@ ax1.plot(t_simvals, L_simvals, label = "Sim.", lw = 3, color = "black")
 ax1.plot(t_noAsimvals, L_noAsimvals, label = "No AB", lw = 6, ls = "dotted", color = "green")
 ax1.plot(t_S0noAsimvals, L_S0noAsimvals, label = "$S_0$, no AB", lw = 6, ls = "dotted", color = "blue")
 ax1.set_yscale("log")
-ax1.yaxis.set_major_formatter(FuncFormatter(sci_fmt))
+#ax1.yaxis.set_major_formatter(FuncFormatter(sci_fmt))
 ax1.set_xlabel("Days after 1st vaccination")
-ax1.set_ylabel("$L$ (copies/mL)")
+ax1.set_ylabel("$L/L_0$")
 ax1.legend()
 
 fig2, ax2 = plt.subplots()

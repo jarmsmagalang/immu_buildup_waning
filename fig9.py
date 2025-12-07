@@ -4,7 +4,7 @@ import scipy.stats as spst
 import pandas as pd
 from SALib.sample import saltelli
 from SALib.analyze import sobol
-from immuwane.model import params_vaccination, model_vaccination, z_init_vaccination, Athresh_event
+from src.model import params_vaccination, model_vaccination, z_init_vaccination, Athresh_event
 import scipy.integrate as integrate
 import matplotlib
 matplotlib.rcParams.update({'figure.autolayout': True})

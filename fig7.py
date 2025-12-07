@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as integrate
-from immuwane.model import params_vaccination, Athresh_val, z_init_vaccination, Athresh_event, model_vaccination
+from src.model import params_vaccination, Athresh_val, z_init_vaccination, Athresh_event, model_vaccination
 import matplotlib
 matplotlib.rcParams.update({'figure.autolayout': True})
 matplotlib.rcParams.update({'font.size':15})

@@ -140,38 +140,76 @@ def params_vaccination():
         Dictionary of model parameters
     """
     
+    # params = {"kL": 2e-7, # Absorption rate of LNP by S (ml/(day*cell)) 
+    #           "tauL": 7, # LNP lifetime (days)
+    #           "kS": 2e-7, # Infection rate of S by LNP (ml/(day*copy))
+    #           "kAPC": 1e-7, # Activation of S per Pi
+    #           "k1": 1/14, # S recruitment (1/day)
+    #           "S0": 1e6, # Constant S recruitment
+    #           "tauI": 4, #I lifetime (days)
+    #           "pp": 25, # Pseudo-antigen production rate (copies/(day*cell))
+    #           "tauPf": 2, # Pf lifetime (days)
+    #           "taufdc": 20, # Pfdc lifetime (days)
+    #           "taussm": 2, # Pssm lifetime (days)
+    #           "kP": 1e-7, # Absorption rate of Pf by S (ml/(day*cell))
+    #           "cN": 1e-3, # Maximum BN recruitment rate into GC (1/day)
+    #           "BN": 5e4, # BN pool size
+    #           "epsilon": 0.05, # Rate of BG leaving GC (1/day)
+    #           "apL": 0.5, # Light zone apoptosis (1/day)
+    #           "NGC": 1, # Number of GC
+    #           "tauBM": 18, # BM lifetime (days)
+    #           "c1": 0.6, # BM amplification (1/days)
+    #           "tauB1": 5, # B1 lifetime (days)
+    #           "h": 0.6, # Fraction of BM that specify into B1
+    #           "tauB2": 180, # B2 lifetime (days)
+    #           "v": 0.9, # Fraction of high affinity BG to specify to BMH
+    #           "pA": 2, # Antibody production rate (ng/(day*cell))
+    #           "tauA": 60, # Antibody lifetime
+    #           "Abcrmin": 1, # Low BCR affinity
+    #           "Abcrmax": 25, # High BCR affinity
+    #           "C": 0.1, # Signal activation by BCR (cells/copy)
+    #           "betaIA": 5e-5, # Rate of infected cell neutralization (ml/day/cell)
+    #           "betaPfA": 5e-5, # Rate of pseudo antigen neutralization (ml/day/cell)
+    #           "gammaIA": 5e-5*2.5, # Rate of antibody consumption by I
+    #           "gammaPfA": 5e-5*5e-4, # Rate of antibody consumption by Pf
+    #           'betaVA': 5e-5, # Rate of virus neutralization
+    #           'tauV': 2, # Virus lifetime
+    #           'kV': 1e-7, # Viral infection rate
+    #           'pV': 2500, # Viral proliferation rate
+    #           'tauIV': 0.5 # Lifetime of cell infected by virus
+    #           }
     params = {"kL": 2e-7, # Absorption rate of LNP by S (ml/(day*cell)) 
               "tauL": 7, # LNP lifetime (days)
               "kS": 2e-7, # Infection rate of S by LNP (ml/(day*copy))
               "kAPC": 1e-7, # Activation of S per Pi
-              "k1": 1/14, # S recruitment (1/day)
+              "k1": 1/12, #######1/14, # S recruitment (1/day)
               "S0": 1e6, # Constant S recruitment
               "tauI": 4, #I lifetime (days)
               "pp": 25, # Pseudo-antigen production rate (copies/(day*cell))
               "tauPf": 2, # Pf lifetime (days)
               "taufdc": 20, # Pfdc lifetime (days)
               "taussm": 2, # Pssm lifetime (days)
-              "kP": 1e-7, # Absorption rate of Pf by S (ml/(day*cell))
+              "kP": 1e-7, ################ 5e-8, # Absorption rate of Pf by S (ml/(day*cell))
               "cN": 1e-3, # Maximum BN recruitment rate into GC (1/day)
               "BN": 5e4, # BN pool size
               "epsilon": 0.05, # Rate of BG leaving GC (1/day)
-              "apL": 0.5, # Light zone apoptosis (1/day)
+              "apL": 0.53, #############0.5, # Light zone apoptosis (1/day)
               "NGC": 1, # Number of GC
               "tauBM": 18, # BM lifetime (days)
               "c1": 0.6, # BM amplification (1/days)
               "tauB1": 5, # B1 lifetime (days)
-              "h": 0.6, # Fraction of BM that specify into B1
+              "h": 0.59, ######### 2/3, # Fraction of BM that specify into B1
               "tauB2": 180, # B2 lifetime (days)
-              "v": 0.9, # Fraction of high affinity BG to specify to BMH
+              "v": 0.88,#############0.9, # Fraction of high affinity BG to specify to BMH
               "pA": 2, # Antibody production rate (ng/(day*cell))
               "tauA": 60, # Antibody lifetime
               "Abcrmin": 1, # Low BCR affinity
               "Abcrmax": 25, # High BCR affinity
-              "C": 0.1, # Signal activation by BCR (cells/copy)
-              "betaIA": 5e-5, # Rate of infected cell neutralization (ml/day/cell)
-              "betaPfA": 5e-5, # Rate of pseudo antigen neutralization (ml/day/cell)
-              "gammaIA": 5e-5*2.5, # Rate of antibody consumption by I
-              "gammaPfA": 5e-5*5e-4, # Rate of antibody consumption by Pf
+              "C": 0.11,#########0.1, # Signal activation by BCR (cells/copy)
+              "betaIA": 5.06e-5,#####5e-5, # Rate of infected cell neutralization (ml/day/cell)
+              "betaPfA": 5.77e-5, ########5e-5, # Rate of pseudo antigen neutralization (ml/day/cell)
+              "gammaIA": 5e-5*2.27,##########5e-5*2.5, # Rate of antibody consumption by I
+              "gammaPfA": 5e-5*4.20e-4,#######5e-5*5e-4, # Rate of antibody consumption by Pf
               'betaVA': 5e-5, # Rate of virus neutralization
               'tauV': 2, # Virus lifetime
               'kV': 1e-7, # Viral infection rate
