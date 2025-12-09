@@ -108,10 +108,10 @@ for c in np.arange(0,len(cases)):
     second_vacc_z = sol1.y[:,-1].copy()
     second_vacc_z[0] += L0
     
-    sol2a = integrate.solve_ivp(model_vaccination, [second_vacc_time,500], second_vacc_z,
+    sol2a = integrate.solve_ivp(model_vaccination, [second_vacc_time,1000], second_vacc_z,
                                 args = ([params]), method = "BDF", dense_output = True, events = [Athresh_event])
     
-    sol2b = integrate.solve_ivp(model_vaccination, [second_vacc_time,500], second_vacc_z,
+    sol2b = integrate.solve_ivp(model_vaccination, [second_vacc_time,1000], second_vacc_z,
                                 args = ([params]), method = "BDF", dense_output = True, events = [Athresh_event_double])
     
     if len(sol2a.t_events[0])>1:

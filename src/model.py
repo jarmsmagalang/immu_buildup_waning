@@ -166,7 +166,7 @@ def params_vaccination():
               "pA": 2, # Antibody production rate (ng/(day*cell))
               "tauA": 60, # Antibody lifetime
               "Abcrmin": 1, # Low BCR affinity
-              "Abcrmax": 25, # High BCR affinity
+              "Abcrmax": 30, # High BCR affinity
               "C": 0.1, # Signal activation by BCR (cells/copy)
               "betaIA": 5e-5, # Rate of infected cell neutralization (ml/day/cell)
               "betaPfA": 5e-5, # Rate of pseudo antigen neutralization (ml/day/cell)
