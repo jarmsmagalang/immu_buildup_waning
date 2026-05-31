@@ -70,13 +70,13 @@ A2 = params["Abcrmin"]*A12 + params["Abcrmax"]*A22
 figsizes = (5,3)
 
 fig1, ax1 = plt.subplots(figsize = figsizes) 
-ax1.plot(t1, L1, lw = 5, ls = "dotted", color = "red")
-ax1.plot(t2, L2, lw = 3, color = "black")
+ax1.plot(t1, L1/L0, lw = 5, ls = "dotted", color = "red")
+ax1.plot(t2, L2/L0, lw = 3, color = "black")
 ax1.set_xlim(right = 100)
-ax1.set_yticks(np.arange(0, 3e5, 1.2e5))
+ax1.set_yticks(np.arange(0, 1.1, 0.5))
 ax1.set_xlabel("Time (days)")
-ax1.set_ylabel("$L$ (copies/mL)")
-ax1.ticklabel_format(axis='y', style='sci', scilimits=(0,0))
+ax1.set_ylabel("$L/L_0$")
+#ax1.ticklabel_format(axis='y', style='sci', scilimits=(0,0))
 
 fig2, ax2 = plt.subplots(figsize = figsizes) 
 ax2.plot(t1, S1, lw = 5, ls = "dotted", color = "red")
